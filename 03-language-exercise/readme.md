@@ -9,4 +9,5 @@ modify the package.json file as follows
     "test" : "jest"
 }
 
+npm test
 ```
