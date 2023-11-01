@@ -1,0 +1,15 @@
+{
+  "name": "03-language-exercise",
+  "version": "1.0.0",
+  "description": "``` npm init -y npm install jest",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
