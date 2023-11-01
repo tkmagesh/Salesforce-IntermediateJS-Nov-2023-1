@@ -47,5 +47,45 @@
         console.log('category does not exist')
     }
     ```
-- Functional
+- Functional (Functions are objects)
+    - Creation - 1
+    ```
+    // function statement
+    function fn(){
+    }
+
+    // function expression
+    var fn = function(){
+    }
+    ```
+    - Creation - 2
+    ```
+    var fn = new Function()
+
+    var sayHi = new Function('console.log("Hi there!");')
+
+    var add = new Function('x', 'y', 'return x + y;')
+    ```
+    - Functions can have attributes
+    ```
+    function fn(){
+    }
+    
+    fn['id'] = 100
+    ```
+    - Functions can have methods
+    ```
+    function fn(){
+    }
+
+    fn['whoAmI'] = function(){
+        console.log('i am a function')
+    }
+
+    fn.whoAmI()
+    ```
+    - Functions can be passed as arguments to other functions
+    - Functions can be returned as return values from other other functions
+
+
 - Object Based
