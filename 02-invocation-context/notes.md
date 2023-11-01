@@ -122,4 +122,13 @@ In JavaScript, it DOES NOT matter **WHERE** the function is OR **WHO** owns the 
     // 'Mr.Magesh, Have a nice day!'
 
     greet.apply(emp, ['Mr.', 'Have a nice day!'])
+
+### 5. As an Immediately Invoked Function Expression
+    (function fn(){
+        console.log('fn invoked')
+    })()
+
+    (function add(x,y){
+        return x + y;
+    })(100,200)
     

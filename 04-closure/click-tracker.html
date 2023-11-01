@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click Tracker</title>
+    <script>
+        (function myApp(){
+            var counter = 0
+            function incCounter() {
+                var a = document.getElementById("divCounter");
+                a.innerHTML = ++counter
+            }
+            function onDocumentLoad(){
+                var btnTrack = document.getElementById('btnTrack');
+                btnTrack.addEventListener('click', incCounter);
+            }
+            window.addEventListener('load', onDocumentLoad);
+        })() // => IIFE
+        // myApp()
+    </script>
 </head>
 <body>
     <h1>Click Tracker</h1>
-    <button id="btnTrack">Track</button>
+    <button id="btnTrack" >Track</button>
     <div id="divCounter">0</div>
 </body>
 </html>
