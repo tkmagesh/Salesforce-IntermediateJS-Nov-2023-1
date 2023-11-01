@@ -33,6 +33,7 @@
     - Invocation Context (this)
     - Function Invocation Patterns
     - Closures
+    - Constructor Functions
     - Functional Programming
     - Prototypal Inheritence
 2. ES6 Features

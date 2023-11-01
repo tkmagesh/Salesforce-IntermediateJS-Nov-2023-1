@@ -131,4 +131,21 @@ In JavaScript, it DOES NOT matter **WHERE** the function is OR **WHO** owns the 
     (function add(x,y){
         return x + y;
     })(100,200)
+
+### 6. Using the "new" keyword (constructor functions)
+
+    function Product(id, name, cost){
+        //this => new object
+        this.id = id
+        this.name = name
+        this.cost = cost
+
+        //to be fixed
+        this.display = function(){
+            console.log(this.id, this.name, this.cost)
+        }
+        // this => returned by default
+    }
+
+    var pen = new Product(100, 'Pen', 10)
     
