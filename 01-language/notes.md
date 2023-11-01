@@ -85,7 +85,29 @@
     fn.whoAmI()
     ```
     - Functions can be passed as arguments to other functions
+    ```
+    function fx(z){
+        console.log('typeof z = ', typeof z)
+    }
+    
+    function fn(){
+    }
+    
+    fx(fn)
+    ```
     - Functions can be returned as return values from other other functions
-
+    ```
+    function getFn(){
+        return function(){
+            console.log('function invoked')
+        }
+    }
+    
+    var fn = getFn()
+    
+    typeof fn
+    
+    fn()
+    ```
 
 - Object Based
