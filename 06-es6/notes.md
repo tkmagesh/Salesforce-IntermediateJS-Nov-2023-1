@@ -47,9 +47,42 @@
 
 ## spread operator (object)
     let product = { id : 100, name : 'Pen', cost : 10 }
-    
+
     // cloning the object with new attributes added
     let newProduct = { ...product, category : 'stationary' }
 
     // cloning the object with updating existing attribute (cost)
     let newProduct = { ...product, cost : 20, category : 'stationary' }
+
+## default arguments
+    function add(x = 10, y = 20){
+        return x + y;
+    }
+    
+    add() //=> 30
+    add(100) //=> 120
+    add(undefined, 200) //=> 210
+    add(100,200) //=> 300
+
+## arrow functions
+    /*
+    //ways of creating functions
+    //1. function statement
+    function add(x,y){
+        return x + y;
+    }
+
+    //2. function expression
+    let add = function(x,y){
+        return x + y;
+    }
+
+    //3. array function
+    let add = (x,y) => {
+        return x + y;
+    }
+    */
+    //if the function body has only one expression
+    let add = (x,y) => x + y;
+
+    
