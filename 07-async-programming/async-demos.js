@@ -101,7 +101,6 @@
     }
 
     // window['addAsyncPromise'] = addAsyncPromise;
-   
     function addAsyncPromiseClient(x,y){
         console.log(`[@client] triggering addAsyncPromise`)
         let p = addAsyncPromise(100,200)
@@ -111,6 +110,35 @@
     }
 
     window['addAsyncPromiseClient'] = addAsyncPromiseClient;
+
+    // async (using promises) (handling errors - using p.catch())
+    function divideAsyncPromise(x,y){
+        console.log(`   [@service] processing ${x} and ${y}`)
+        let p = new Promise((resolveFn, rejectFn) => {
+            setTimeout(() => {
+                if (y === 0) {
+                    let err = new Error('cannot divide by zero');
+                    return rejectFn(err); // the promise is being rejected
+                }
+                let result = x / y;
+                console.log(`   [@service] returning result`)
+                resolveFn(result); // the promise is being resolved
+            }, 5000);
+        })
+        return p;
+    }
+
+    function divideAsyncPromiseClient(x,y){
+        console.log(`[@client] triggering divideAsyncPromise`)
+        let p = divideAsyncPromise(x, y)
+        p.then(result => {
+            console.log(`[@client] result = ${result}`)
+        })
+        .catch(err => {
+            console.log(`[@client] caught exception: ${err}`)
+        });
+    }
+    window['divideAsyncPromiseClient'] = divideAsyncPromiseClient;
 
 })()
 
