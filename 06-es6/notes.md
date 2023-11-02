@@ -85,4 +85,84 @@
     //if the function body has only one expression
     let add = (x,y) => x + y;
 
+## iterators (for..of)
+    let nos = [3,1,4,2,5]
+    for (let no of nos)
+        console.log(no)
+
+## class
+    class Employee {
+        
+        // instance attributes
+        _id = 0;
+        name = '';
+        salary = 0;
+
+        // static attributes
+        static type = 'Employee'
+
+        //setter (id)
+        set id(value){
+            console.log('setter[id] invoked');
+            if (value < 0)
+                throw new Error('invalid id');
+            this._id = value;
+        }
+        
+        //getter(id)
+        get id(){
+            console.log('getter[id] invoked');
+            return this._id;
+        }
+        
+        // constructor method
+        constructor(id, name, salary){
+            console.log('constructor invoked');
+            this._id = id;
+            this.name = name;
+            this.salary = salary;
+        }
+
+        // method
+        format(){
+            return `id = ${this.id}, name = ${this.name}, salary = ${this.salary}`
+        }
+
+        // static method
+        static IsEmployee(obj){
+            return obj instanceof Employee;
+        }
+    }  
+
+    // usage
+    let emp = new Employee(100, 'Magesh', 10000)
     
+    emp.format()
+
+    emp.id
+    
+    emp.id = 200
+    emp.id = -200
+    
+    Employee.type
+    
+    Employee.IsEmployee(emp)
+    
+    Employee.IsEmployee({})
+
+## class inheritence
+    class FulltimeEmployee extends Employee {
+    
+        benefits = '';
+        
+        constructor(id, name, salary, benefits){
+            super(id, name, salary);
+            this.benefits = benefits
+        }
+
+        //override the format() method
+        format(){
+            return `${super.format()}, benefits = ${this.benefits}`
+        }
+    }
+
