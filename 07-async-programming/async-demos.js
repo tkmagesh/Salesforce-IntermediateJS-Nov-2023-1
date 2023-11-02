@@ -101,14 +101,25 @@
     }
 
     // window['addAsyncPromise'] = addAsyncPromise;
+    /* 
     function addAsyncPromiseClient(x,y){
         console.log(`[@client] triggering addAsyncPromise`)
-        let p = addAsyncPromise(100,200)
+        let p = addAsyncPromise(x,y)
         p.then(function(result){
             console.log(`[@client] result = ${result}`)
         })
-    }
+    } 
+    */
 
+    // using async await
+    async function addAsyncPromiseClient(x,y){
+        console.log(`[@client] triggering addSync`)
+        let result = await addAsyncPromise(x,y);
+        console.log(`[@client] result = ${result}`)
+        let doubleResult = result * 2;
+        return doubleResult;
+    }
+    
     window['addAsyncPromiseClient'] = addAsyncPromiseClient;
 
     // async (using promises) (handling errors - using p.catch())
@@ -142,7 +153,7 @@
 
 })()
 
-// follow up operation (async)
+// follow up operation (async) (aka promise chaining)
 /* 
 console.log(`[@client] triggering addAsyncPromise`)
 let p = addAsyncPromise(100,200)
