@@ -119,7 +119,7 @@
         let doubleResult = result * 2;
         return doubleResult;
     }
-    
+
     window['addAsyncPromiseClient'] = addAsyncPromiseClient;
 
     // async (using promises) (handling errors - using p.catch())
@@ -139,6 +139,7 @@
         return p;
     }
 
+    /* 
     function divideAsyncPromiseClient(x,y){
         console.log(`[@client] triggering divideAsyncPromise`)
         let p = divideAsyncPromise(x, y)
@@ -148,8 +149,46 @@
         .catch(err => {
             console.log(`[@client] caught exception: ${err}`)
         });
-    }
+    } 
+    */
+
+    async function divideAsyncPromiseClient(x,y){
+        console.log(`[@client] triggering divideAsyncPromise`)
+        try {
+            let result = await divideAsyncPromise(x, y)
+            console.log(`[@client] result = ${result}`)
+        } catch(err) {
+            console.log(`[@client] caught exception: ${err}`)
+        };
+    } 
+    
     window['divideAsyncPromiseClient'] = divideAsyncPromiseClient;
+
+    // promises synchronization
+    function doAddAndDivide(x,y){
+        let addPromise = addAsyncPromise(x,y);
+        let dividePromise = divideAsyncPromise(x,y);
+        Promise.all([addPromise, dividePromise]).then(([addResult, divideResult]) => {
+            console.log(`[@client] addResult = ${addResult}, divideResult = ${divideResult}`)
+        })
+    } 
+   window['doAddAndDivide'] = doAddAndDivide;
+
+    async function doAddAndDivide2(x,y){
+        let addResult = await addAsyncPromise(x,y);
+        let divideResult = await divideAsyncPromise(x,y);
+        console.log(`[@client] addResult = ${addResult}, divideResult = ${divideResult}`)
+    }
+
+    window['doAddAndDivide2'] = doAddAndDivide2;
+
+    async function doAddAndDivide3(x,y){
+        let addPromise = addAsyncPromise(x,y);
+        let dividePromise = divideAsyncPromise(x,y);
+        let [addResult, divideResult] = await Promise.all([addPromise, dividePromise])
+        console.log(`[@client] addResult = ${addResult}, divideResult = ${divideResult}`)
+    } 
+    window['doAddAndDivide3'] = doAddAndDivide3;
 
 })()
 
@@ -208,4 +247,18 @@ let p2 = p.then(function(result){
 p2.then(doubleResult => {
     console.log(`[@client] doubleResult = ${doubleResult}`);
 });
+*/
+
+/* 
+console.log(`[@client] triggering addAsyncPromise`)
+
+addAsyncPromise(100,200)
+    .then(function(result){
+        console.log(`[@client] result = ${result}`)
+        let doubleResult = result * 2;
+        return doubleResult;
+    })
+    .then(doubleResult => {
+        console.log(`[@client] doubleResult = ${doubleResult}`);
+    });
 */
