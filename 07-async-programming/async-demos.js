@@ -15,7 +15,7 @@
 
     window['addSyncClient'] = addSyncClient;
 
-    // async
+    // async (using callbacks)
     function addAsync(x,y, callbackFn){
         console.log(`   [@service] processing ${x} and ${y}`)
         setTimeout(function(){
@@ -57,7 +57,7 @@
     window['divideSyncClient'] = divideSyncClient;
 
     // Handling errors in async operations (using "error first callback" technique)
-    // async
+    // async (using callbacks)
     function divideAsync(x,y, callbackFn){
         console.log(`   [@service] processing ${x} and ${y}`)
         setTimeout(() => {
@@ -84,5 +84,34 @@
         });
     }
     window['divideAsyncClient'] = divideAsyncClient;
+
+    // async (using promises)
+    function addAsyncPromise(x,y){
+        console.log(`   [@service] processing ${x} and ${y}`)
+        let p = new Promise(function(resolveFn, rejectFn){
+            setTimeout(function(){
+                let result = x + y;
+                console.log(`   [@service] returning result`)
+                // communicate the result to the promise?
+                resolveFn(result); // the promise is being resolved
+            }, 5000);
+        });
+        
+        return p;
+    }
+
+    window['addAsyncPromise'] = addAsyncPromise;
+
+
+
+   /* 
+    function addAsyncClient(x,y){
+        console.log(`[@client] triggering addAsync`)
+        addAsync(x,y, function(result){
+            console.log(`[@client] result = ${result}`)
+        });
+    }
+
+    window['addAsyncClient'] = addAsyncClient; */
 
 })()
