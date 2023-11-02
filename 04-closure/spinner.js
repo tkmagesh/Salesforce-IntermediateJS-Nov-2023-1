@@ -77,3 +77,18 @@ function spinnerFactory(){
 
 var s1 = spinnerFactory()
 var s2 = spinnerFactory()
+
+
+// ver4.0 (constructor function)
+function Spinner(){
+    // technically public but practically private
+    this.__count__ = 0;
+}
+
+Spinner.prototype['up'] = function(){
+    return ++this.__count__;
+}
+Spinner.prototype['down'] = function(){
+    return --this.__count__;
+}
+
