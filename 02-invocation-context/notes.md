@@ -128,7 +128,7 @@ In JavaScript, it DOES NOT matter **WHERE** the function is OR **WHO** owns the 
         console.log('fn invoked')
     })()
 
-    (function add(x,y){
+    var result = (function add(x,y){
         return x + y;
     })(100,200)
 
@@ -148,4 +148,8 @@ In JavaScript, it DOES NOT matter **WHERE** the function is OR **WHO** owns the 
     }
 
     var pen = new Product(100, 'Pen', 10)
+
+    The object created will maintain a reference to the constructor function through the "constructor" attribute
+
+    console.log(pen.constructor) //=> f Product(){...}
     
