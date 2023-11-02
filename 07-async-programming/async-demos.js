@@ -100,6 +100,20 @@
         return p;
     }
 
+    function addAsyncPromiseClientTimeout(x,y){
+        return new Promise((resolveFn, rejectFn) => {
+            let addPromise = addAsyncPromise(x,y);
+            addPromise.then(result => {
+                resolveFn(result);
+            })
+            setTimeout(() => {
+                rejectFn(new Error('timeout occurred'))
+            }, 3000);
+        })
+    }
+
+    window['addAsyncPromiseClientTimeout'] = addAsyncPromiseClientTimeout;
+
     // window['addAsyncPromise'] = addAsyncPromise;
     /* 
     function addAsyncPromiseClient(x,y){
