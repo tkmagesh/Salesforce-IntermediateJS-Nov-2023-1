@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Workers</title>
+    <script>
+        (() => {
+            console.log('web workers demo [index.html]')
+            let btnDoWork, divMessages, workProgress;
+
+            let worker;
+
+            function displayMessage(msg){
+                divMessages.innerHTML += msg + '<br/>'
+            }
+            function onBtnDoWorkClick(){
+                displayMessage('Work Started');
+                worker.postMessage('start')
+                // displayMessage('Work Completed');
+            }
+            function onWorkerMessage(evtArg){
+                if (evtArg.data.type === 'done'){
+                    displayMessage('Work Completed');
+                } else if (evtArg.data.type === 'progress'){
+                    workProgress.value = evtArg.data.percentCompleted;
+                } else {
+                    console.log('unknown message :', evtArg.data);
+                }
+            }
+            function onDocumentLoad(){
+                btnDoWork = document.getElementById('btnDoWork');
+                btnDoWork.addEventListener('click', onBtnDoWorkClick);
+                divMessages = document.getElementById('divMessages')
+                worker = new Worker('process-data.js');
+                worker.addEventListener('message', onWorkerMessage)
+                workProgress = document.getElementById('workProgress')
+            }
+            window.addEventListener('load', onDocumentLoad)
+        })()
+    </script>
+</head>
+<body>
+    <h1>Web Worker</h1>
+    <hr>
+    <button id="btnDoWork">Do Work</button>
+    <br>
+    <input type="text" name="" id="">
+    <div>
+        <progress id="workProgress" min="0" max="100" value="0"></progress>
+    </div>
+    <div id="divMessages"></div>
+</body>
+</html>
