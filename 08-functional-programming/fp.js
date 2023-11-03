@@ -139,17 +139,48 @@ useCase('Filter', () => {
         console.table(stationaryProducts)
     });
     useCase('[Generic] Filter any by any criteria', () => {
-        function filter(/* .... */){
-            /*  */
+        function filter(list, predicate){
+            let result = [];
+            for (let p of list){
+                if (predicate(p)) 
+                    result.push(p);
+            }
+            return result
         }
+
+        function negate(predicate){
+            return function(...args){
+                return !predicate(...args)
+            }
+        }
+
         useCase('Products by cost', () => {
+            let costlyProductPredicate = p => p.cost > 60;
+
             useCase('Costly products [cost > 50]', () => {
-                /*  */
+               let costlyProducts = filter(products, costlyProductPredicate);
+               console.table(costlyProducts);
             });
+            useCase('Affordable products', () => {
+                // let affordableProductPredicate = p => p.cost <= 60
+                // let affordableProductPredicate = p => !costlyProductPredicate(p)
+                let affordableProductPredicate = negate(costlyProductPredicate)
+                let affordableProducts = filter(products, affordableProductPredicate);
+                console.table(affordableProducts);
+            })
         })
         useCase('Products by units', () => {
+            let understockedProductPredicate = p => p.units < 50;
+
             useCase('Understocked products [units < 50]', () => {
-                /*  */
+                let understockedProducts = filter(products, understockedProductPredicate);
+                console.table(understockedProducts);
+            });
+            useCase('Wellstocked products', () => {
+                // let wellstockedProductPredicate = p => !understockedProductPredicate(p)
+                let wellstockedProductPredicate = negate(understockedProductPredicate)
+                let wellstockedProducts = filter(products, wellstockedProductPredicate);
+                console.table(wellstockedProducts);
             });
         })
     })
