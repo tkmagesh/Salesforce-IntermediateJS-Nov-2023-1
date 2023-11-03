@@ -186,4 +186,100 @@ useCase('Filter', () => {
     })
 })
 
+useCase('GroupBy', () => {
+    useCase('[Specific] Group by category', () => {
+        function groupProductsByCategory(){
+            let result = {
+                stationary: [],
+                grocery: [],
+                utencil: [],
+                electronics: []
+            };
+            for (let p of products){
+                let key = p.category
+                result[key].push(p)
+            }
+            return result
+        }
+        let productsByCategory = groupProductsByCategory()
+        console.log(productsByCategory)
+    })
+    useCase('[Generic] Group any list by any key', () => {
+        function groupBy(list, keySelector){
+            let result = {};
+            for (let p of list){
+                let key = keySelector(p)
+                /* 
+                if (typeof result[key] !== 'undefined')
+                    result[key] = [] 
+                */
+                result[key] = result[key] || [];
+                result[key].push(p)
+            }
+            return result
+        }
+        useCase('Products by cost', () => {
+            let costKeySelector = p => p.cost > 50 ? 'costly' : 'affordable';
+            let productsByCost = groupBy(products, costKeySelector)
+            console.log(productsByCost)
+        })
+        useCase('Products by units', () => {
+            let unitsKeySelector = p => p.units > 50 ? 'wellstocked' : 'understocked';
+            let productsByUnits = groupBy(products, unitsKeySelector)
+            console.log(productsByUnits)
+        
+        })
+    })
+
+})
+
+useCase('Sort using builtin function', () => {
+    function getComparer(attrName){
+        return (item1, item2) => {
+            if (item1[attrName] > item2[attrName]) return 1;
+            if (item1[attrName] < item2[attrName]) return -1;
+            return 0;
+        }
+    }
+    function sort(list, comparer){
+        if (typeof comparer === 'function') return list.sort(comparer)
+        if (typeof comparer === 'string') {
+            let comparerFn = getComparer(comparer)
+            return list.sort(comparerFn)
+        }
+    }
+
+    // The above implementation will lead to two sort implementations (Array.sort, our own sort)
+    // Not advisable but possible
+    /* 
+    (() => {
+        let builtinSort = Array.prototype.sort;
+        Array.prototype.sort = function(comparer){
+            if (typeof comparer === 'function') return builtinSort.call(this, comparer)
+            if (typeof comparer === 'string') {
+                let comparerFn = getComparer(comparer)
+                return builtinSort.call(this, comparerFn)
+            }
+        }
+    })() 
+    */
+})
+
+/* 
+groupBy using 'Array.reduce' 
+
+let productsByCategory = products.reduce(function(prevResult, product){
+    let key = product.category;
+    let newResult = { ...prevResult, [key] : prevResult[key] || [] }
+    newResult[key].push(product)
+    return newResult;
+}, {})
+
+let productsByCost = products.reduce(function(prevResult, product){
+    let key = product.cost > 50 ? 'costly' : 'affordable'
+    let newResult = { ...prevResult, [key] : prevResult[key] || [] }
+    newResult[key].push(product)
+    return newResult;
+}, {})
+*/
 
