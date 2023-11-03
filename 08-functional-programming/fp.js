@@ -125,4 +125,34 @@ useCase('Sort', function(){
     })
 })
 
+useCase('Filter', () => {
+    useCase('[Specific] Filter stationary products', () => {
+        function filterStationaryProducts(){
+            let result = [];
+            for (let p of products){
+                if (p.category === 'stationary') 
+                    result.push(p);
+            }
+            return result
+        }
+        let stationaryProducts = filterStationaryProducts()
+        console.table(stationaryProducts)
+    });
+    useCase('[Generic] Filter any by any criteria', () => {
+        function filter(/* .... */){
+            /*  */
+        }
+        useCase('Products by cost', () => {
+            useCase('Costly products [cost > 50]', () => {
+                /*  */
+            });
+        })
+        useCase('Products by units', () => {
+            useCase('Understocked products [units < 50]', () => {
+                /*  */
+            });
+        })
+    })
+})
+
 
